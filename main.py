@@ -41,6 +41,10 @@ class MyAPP(QMainWindow, Ui_MainWindow):
         self.pushButton.setDisabled(True)
         print("开始合成")
         text = self.plainTextEdit.toPlainText()
+        if not text:
+            print("请收入待转文本")
+            self.pushButton.setEnabled(True)
+            return
         per_map = {
             -2: 0,
             -3: 1,
