@@ -1,5 +1,5 @@
 /* === Shared === */
-QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox,
+QPlainTextEdit, QStackedWidget, QLabel, QPushButton, QRadioButton, QCheckBox,
 QGroupBox, QStatusBar, QToolButton, QComboBox, QDialog {
     background-color: #222222;
     color: #BBBBBB;

@@ -27,10 +27,6 @@ class MyAPP(QMainWindow, Ui_MainWindow):
         super(MyAPP, self).__init__(parent)
         self.about_us = AboutUs()
         self.setupUi(self)
-        self.setup_ui()
-
-    def setup_ui(self):
-        pass
 
     @pyqtSlot()
     def on_action_triggered(self):
