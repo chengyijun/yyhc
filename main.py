@@ -6,6 +6,16 @@ from bdapi import get_audio
 from mainui import Ui_MainWindow
 
 
+class CommonHelper:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def readQss(style):
+        with open(style, 'r') as f:
+            return f.read()
+
+
 class AboutUs(QDialog, Ui_Dialog):
     def __init__(self, parent=None):
         super(AboutUs, self).__init__(parent)
@@ -72,6 +82,9 @@ def main():
     import sys
     app = QApplication(sys.argv)
     my_app = MyAPP()
+    style_file = './myqss.qss'
+    qss_style = CommonHelper.readQss(style_file)
+    my_app.setStyleSheet(qss_style)
     my_app.show()
     sys.exit(app.exec_())
 
