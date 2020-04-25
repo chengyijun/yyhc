@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
+
 from aboutui import Ui_Dialog
 from bdapi import get_audio
 from mainui import Ui_MainWindow
@@ -45,28 +46,14 @@ class MyAPP(QMainWindow, Ui_MainWindow):
             print("请收入待转文本")
             self.pushButton.setEnabled(True)
             return
-        per_map = {
-            -2: 0,
-            -3: 1,
-            -4: 3,
-            -5: 4
-        }
-        aue_map = {
-            -2: 3,
-            -3: 6
-        }
+        per_map = {-2: 0, -3: 1, -4: 3, -5: 4}
+        aue_map = {-2: 3, -3: 6}
         per = per_map[self.buttonGroup.checkedId()]
         aue = aue_map[self.buttonGroup_2.checkedId()]
         spd = self.verticalSlider.value()
         pit = self.verticalSlider_2.value()
         vol = self.verticalSlider_3.value()
-        param = {
-            'vol': vol,
-            'pit': pit,
-            'spd': spd,
-            'per': per,
-            'aue': aue
-        }
+        param = {'vol': vol, 'pit': pit, 'spd': spd, 'per': per, 'aue': aue}
         print(text)
         print(param)
         try:

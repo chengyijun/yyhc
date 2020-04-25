@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from aip import AipSpeech
-
 """
 百度语音合成api接口说明
 tex	必填	合成的文本，使用UTF-8编码。小于2048个中文字或者英文数字。（文本在百度服务器内转换为GBK后，长度必须小于4096字节）
@@ -24,7 +23,11 @@ def get_audio(text=None, vol=5, pit=5, spd=5, per=0, aue=6):
     APP_ID = '19169841'  # 替换成你的app_id
     client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
     result = client.synthesis(text, 'zh', 1, {
-        'vol': vol, 'pit': pit, 'spd': spd, 'per': per, 'aue': aue
+        'vol': vol,
+        'pit': pit,
+        'spd': spd,
+        'per': per,
+        'aue': aue
     })
     file_name = text[:10]
     if not isinstance(result, dict):
