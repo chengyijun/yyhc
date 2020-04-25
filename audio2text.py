@@ -1,4 +1,8 @@
 import json
+import os
+import pickle
+import time
+
 import requests
 
 
@@ -9,6 +13,7 @@ class Audio2Text:
 
     def __init__(self):
         self.access_token = None
+        self.expires_in = 2592000
         self.get_token()
 
     def query_task(self):
@@ -39,10 +44,34 @@ class Audio2Text:
                             headers=headers)
         print(res.json())
 
+    @staticmethod
+    def get_token_from_file():
+        with open('./token', 'rb') as f:
+            data = pickle.load(f)
+        return data.get('access_token'), data.get('request_time')
+
     def get_token(self):
+        if self.is_vaild_token():
+            self.access_token, _ = self.get_token_from_file()
+        else:
+            self.get_token_from_api()
+
+    def is_vaild_token(self):
+        if not os.path.exists('./token'):
+            return False
+        self.access_token, request_time = self.get_token_from_file()
+        if int(time.time()) - request_time < self.expires_in:
+            return True
+        else:
+            return False
+
+    def get_token_from_api(self):
         """
         :return: 
         """
+        # 判断token是否过期
+        # 存储的token文件信息内容
+        # {'access_token': '****', 'request_time': 1587805086}
         url = 'https://openapi.baidu.com/oauth/2.0/token'
         params = {
             'grant_type': 'client_credentials',
@@ -53,6 +82,14 @@ class Audio2Text:
         print(res.json())
         if res.status_code == 200:
             self.access_token = res.json().get('access_token')
+            self.expires_in = res.json().get('expires_in')
+            request_time = int(time.time())
+            data = {
+                'access_token': self.access_token,
+                'request_time': request_time
+            }
+            with open('./token', 'wb') as f:
+                pickle.dump(data, f)
         else:
             raise Exception('access_token 获取失败')
 
