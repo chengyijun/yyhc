@@ -8,11 +8,6 @@ import yaml
 
 
 class Audio2Text:
-    API_KEY = 'ICwzDk4upDquwaBUUq8OWWGs'  # 替换成你的api_key 在创建的应用中查找
-    SECRET_KEY = '2os45zZiEAPUt4u0hX7Ytyy5KlbbAKey'  # 替换成你的secret_key 在创建的应用中查找
-
-    # APP_ID = '19591144'  # 替换成你的app_id
-
     def __init__(self):
         self.access_token = None
         self.expires_in = 2592000
