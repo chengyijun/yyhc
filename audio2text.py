@@ -4,12 +4,14 @@ import pickle
 import time
 
 import requests
+import yaml
 
 
 class Audio2Text:
     API_KEY = 'ICwzDk4upDquwaBUUq8OWWGs'  # 替换成你的api_key 在创建的应用中查找
     SECRET_KEY = '2os45zZiEAPUt4u0hX7Ytyy5KlbbAKey'  # 替换成你的secret_key 在创建的应用中查找
-    APP_ID = '19591144'  # 替换成你的app_id
+
+    # APP_ID = '19591144'  # 替换成你的app_id
 
     def __init__(self):
         self.access_token = None
@@ -65,6 +67,13 @@ class Audio2Text:
         else:
             return False
 
+    @staticmethod
+    def get_config_data():
+        with open('./config.yaml', 'r') as f:
+            data = f.read()
+        config_data = yaml.load(data, Loader=yaml.FullLoader)
+        return config_data
+
     def get_token_from_api(self):
         """
         :return: 
@@ -73,10 +82,12 @@ class Audio2Text:
         # 存储的token文件信息内容
         # {'access_token': '****', 'request_time': 1587805086}
         url = 'https://openapi.baidu.com/oauth/2.0/token'
+        config_data = self.get_config_data()
+
         params = {
             'grant_type': 'client_credentials',
-            'client_id': self.API_KEY,
-            'client_secret': self.SECRET_KEY
+            'client_id': config_data.get('bdapi').get('API_KEY'),
+            'client_secret': config_data.get('bdapi').get('SECRET_KEY')
         }
         res = requests.post(url=url, params=params)
         print(res.json())
